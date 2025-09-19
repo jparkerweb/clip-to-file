@@ -1,6 +1,8 @@
 # 📋 Clip-to-File
+PowerShell utility that instantly saves your clipboard content to organized files with timestamped names.
 
-A lightning-fast PowerShell utility that instantly saves your clipboard content to organized files with timestamped names.
+
+<img src=".readme/clip-to-file.jpg" width="800" />
 
 ## ✨ Features
 
@@ -9,7 +11,8 @@ A lightning-fast PowerShell utility that instantly saves your clipboard content 
 - **Organized Output**: Files saved with clean timestamps (`YYYYMMDD_HHMMSS` format)
 - **Conflict Resolution**: Automatically handles duplicate filenames by appending numbers
 - **Configurable**: Simple INI-based configuration with sensible defaults
-- **Error Handling**: Friendly error messages guide you through any issues
+- **Error Handling**: Friendly error messages with pause prompts to read before window closes
+- **Explorer Integration**: Optionally open Windows Explorer with the saved file selected
 
 ## 🚀 Quick Start
 
@@ -43,10 +46,17 @@ The script creates a `clip-to-file.ini` configuration file on first run:
 ```ini
 [Settings]
 SavePath=C:\Users\YourName\Downloads
+OpenFolderAfterSave=false
 ```
 
-**Default Location**: Your Downloads folder
-**Customization**: Edit the INI file to change the save directory
+### Configuration Options
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `SavePath` | Downloads folder | Directory where files will be saved |
+| `OpenFolderAfterSave` | `false` | When `true`, opens Windows Explorer with the saved file selected |
+
+**Customization**: Edit the INI file to change settings
 
 ## 🔥 Pro Tip: Keyboard Shortcuts
 
@@ -57,11 +67,27 @@ Transform this into a super-powered clipboard tool by mapping it to a keyboard s
 1. **Install [AutoHotkey](https://www.autohotkey.com/)**
 2. **Create a script file** (e.g., `clipboard-hotkey.ahk`):
    ```autohotkey
+   ; AutoHotkey v2 syntax
    ; Ctrl+Alt+V to save clipboard
-   ^!v::Run, powershell.exe -WindowStyle Hidden -File "C:\git\img-clip-to-jpg\clip-to-file.ps1"
+   ^!v::Run('powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\path\to\clip-to-file.ps1"')
    ```
 3. **Run the AutoHotkey script**
 4. **Enjoy**: Press `Ctrl+Alt+V` to instantly save clipboard content!
+
+#### Convert to Standalone EXE (Optional)
+
+Make your hotkey portable without requiring AutoHotkey installation:
+
+1. **Right-click** your `.ahk` file
+2. **Select** "Compile Script" (if you have AutoHotkey installed)
+3. **Or use** [Ahk2Exe](https://www.autohotkey.com/docs/v2/Scripts.htm#ahk2exe) compiler directly
+4. **Result**: A standalone `.exe` file that runs on any Windows PC
+
+The compiled EXE:
+- Works without AutoHotkey installed
+- Can be added to Windows startup folder
+- Portable - share with colleagues or use on multiple PCs
+- Small file size (~1-2 MB)
 
 ### Option 2: Windows Shortcut
 
@@ -70,14 +96,6 @@ Transform this into a super-powered clipboard tool by mapping it to a keyboard s
 3. **Click** in the "Shortcut key" field
 4. **Press** your desired key combination (e.g., `Ctrl+Alt+V`)
 5. **Click** "OK"
-
-### Option 3: PowerToys
-
-If you have [Microsoft PowerToys](https://github.com/microsoft/PowerToys) installed:
-
-1. **Open** PowerToys Settings
-2. **Navigate** to "Keyboard Manager"
-3. **Add** a new shortcut mapping to run your script
 
 ## 🛠️ Requirements
 
@@ -114,6 +132,10 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 - Ensure you have content copied to your clipboard before running the script
 - Only images and text content are supported
 
+### Error Messages Stay Visible
+- Error messages windows are not automatically closed
+- This ensures you can read error messages when running from shortcuts or double-clicking
+
 ## 🎯 Perfect For
 
 - **Screenshots**: Instantly save screenshots with organized naming
@@ -127,4 +149,4 @@ Free to use, modify, and distribute. No attribution required.
 
 ---
 
-**Made for productivity enthusiasts who love organized file systems** 🚀
+**Made for productivity enthusiasts** 🚀
